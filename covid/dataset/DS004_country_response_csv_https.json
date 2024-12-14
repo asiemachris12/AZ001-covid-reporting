@@ -1,0 +1,22 @@
+{
+	"name": "DS004_country_response_csv_https",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS003_HTTP_opendata_ecdc_europa_eu",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": "cloudboxacademy/covid19/blob/main/ecdc_data/country_response.csv"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
