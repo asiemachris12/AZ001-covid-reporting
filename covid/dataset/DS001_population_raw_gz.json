@@ -1,0 +1,24 @@
+{
+	"name": "DS001_population_raw_gz",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS001_blob_covidreporting_SA",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "population_by_age (1).tsv.gz",
+				"container": "population"
+			},
+			"columnDelimiter": "\t",
+			"compressionCodec": "gzip",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
