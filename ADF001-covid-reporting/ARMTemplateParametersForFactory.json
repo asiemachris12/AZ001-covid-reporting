@@ -13,6 +13,9 @@
 		},
 		"LS001_covidreporting_dl_properties_typeProperties_url": {
 			"value": "https://dl002covidreporting.dfs.core.windows.net/"
+		},
+		"LS003_HTTP_opendata_ecdc_europa_eu_properties_typeProperties_url": {
+			"value": "https://github.com"
 		}
 	}
 }
