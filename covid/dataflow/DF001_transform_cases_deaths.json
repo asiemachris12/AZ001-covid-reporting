@@ -16,6 +16,12 @@
 			"transformations": [
 				{
 					"name": "FilterEuropeOnly"
+				},
+				{
+					"name": "SelectOnlyRequiredFields"
+				},
+				{
+					"name": "ConvertDatefromStringToDate"
 				}
 			],
 			"scriptLines": [
@@ -26,14 +32,29 @@
 				"          population as integer,",
 				"          indicator as string,",
 				"          daily_count as integer,",
-				"          date as date,",
+				"          date as string,",
 				"          rate_14_day as double,",
 				"          source as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> CasesAndDeathsSource",
-				"CasesAndDeathsSource filter(continent == 'Europe' && not(isNull(country_code))) ~> FilterEuropeOnly"
+				"     ignoreNoFilesFound: false,",
+				"     dateFormats: ['yyyy-MM-dd','MM/dd/yyyy','dd/MM/yyyy','yyyy/MM/dd','MM-dd-yyyy','dd-MM-yyyy','dd.MM.yyyy','MM.dd.yyyy','yyyy.MM.dd']) ~> CasesAndDeathsSource",
+				"ConvertDatefromStringToDate filter(continent == 'Europe' && not(isNull(country_code))) ~> FilterEuropeOnly",
+				"FilterEuropeOnly select(mapColumn(",
+				"          country,",
+				"          country_code,",
+				"          population,",
+				"          indicator,",
+				"          daily_count,",
+				"          source,",
+				"          each(match(name == 'date'),",
+				"               'reported' + '_date' = $$)",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectOnlyRequiredFields",
+				"CasesAndDeathsSource derive(date = toDate(date, 'MM/dd/yyyy')\r",
+				") ~> ConvertDatefromStringToDate"
 			]
 		}
 	}
