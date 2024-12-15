@@ -22,6 +22,9 @@
 				},
 				{
 					"name": "ConvertDatefromStringToDate"
+				},
+				{
+					"name": "PivotCounts"
 				}
 			],
 			"scriptLines": [
@@ -54,7 +57,16 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectOnlyRequiredFields",
 				"CasesAndDeathsSource derive(date = toDate(date, 'MM/dd/yyyy')\r",
-				") ~> ConvertDatefromStringToDate"
+				") ~> ConvertDatefromStringToDate",
+				"SelectOnlyRequiredFields pivot(groupBy(country,",
+				"          country_code,",
+				"          population,",
+				"          source,",
+				"          reported_date),",
+				"     pivotBy(indicator, ['confirmed cases', 'deaths']),",
+				"     count = sum(daily_count),",
+				"     columnNaming: '$V_$N',",
+				"     lateral: true) ~> PivotCounts"
 			]
 		}
 	}
