@@ -17,6 +17,9 @@
 		"LS003_HTTP_opendata_ecdc_europa_eu_properties_typeProperties_url": {
 			"value": "https://github.com"
 		},
+		"LS004_HTTP_opendata_ecdc_europa_eu_fixed_properties_typeProperties_url": {
+			"value": "@linkedService().sourceBaseURL"
+		},
 		"containerUri": {
 			"value": ""
 		},
