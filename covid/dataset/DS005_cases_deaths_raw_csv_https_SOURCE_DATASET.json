@@ -1,0 +1,31 @@
+{
+	"name": "DS005_cases_deaths_raw_csv_https_SOURCE_DATASET",
+	"properties": {
+		"description": "Contains the parameters of all the 4 imported files",
+		"linkedServiceName": {
+			"referenceName": "LS003_HTTP_opendata_ecdc_europa_eu",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"relativeURL": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": {
+					"value": "@dataset().relativeURL",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
