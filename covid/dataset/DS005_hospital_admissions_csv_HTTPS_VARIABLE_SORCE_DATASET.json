@@ -1,5 +1,5 @@
 {
-	"name": "DS005_cases_deaths_raw_csv_https_SOURCE_DATASET",
+	"name": "DS005_hospital_admissions_csv_HTTPS_VARIABLE_SORCE_DATASET",
 	"properties": {
 		"description": "Contains the parameters of all the 4 imported files",
 		"linkedServiceName": {

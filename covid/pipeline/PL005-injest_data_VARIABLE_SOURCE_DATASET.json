@@ -1,5 +1,5 @@
 {
-	"name": "PL005-injest_cases_deaths_data_SOURCE_DATASET",
+	"name": "PL005-injest_data_VARIABLE_SOURCE_DATASET",
 	"properties": {
 		"activities": [
 			{
@@ -48,7 +48,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS005_cases_deaths_raw_csv_https_SOURCE_DATASET",
+						"referenceName": "DS005_hospital_admissions_csv_HTTPS_VARIABLE_SORCE_DATASET",
 						"type": "DatasetReference",
 						"parameters": {
 							"relativeURL": {
@@ -60,7 +60,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS005_cases_deaths_raw_csv_DL_SORCE_DATASET",
+						"referenceName": "DS005_hospital_admissions_csv_DL_VARIABLE_SORCE_DATASET",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": {

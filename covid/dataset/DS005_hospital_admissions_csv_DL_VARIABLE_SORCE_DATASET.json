@@ -1,5 +1,5 @@
 {
-	"name": "DS005_cases_deaths_raw_csv_DL_SORCE_DATASET",
+	"name": "DS005_hospital_admissions_csv_DL_VARIABLE_SORCE_DATASET",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS001_covidreporting_dl",
