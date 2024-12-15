@@ -48,14 +48,26 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DS003_cases_deaths_raw_csv_https",
-						"type": "DatasetReference"
+						"referenceName": "DS005_cases_deaths_raw_csv_https_SOURCE_DATASET",
+						"type": "DatasetReference",
+						"parameters": {
+							"relativeURL": {
+								"value": "@variables('sourceRelativeURL')",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DS003_cases_deaths_raw_csv_DL",
-						"type": "DatasetReference"
+						"referenceName": "DS005_cases_deaths_raw_csv_DL_SORCE_DATASET",
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": {
+								"value": "@variables('sinkFileName')",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}
