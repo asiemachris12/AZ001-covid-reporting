@@ -6,10 +6,17 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "DF001_raw_cases_and_deaths2",
+						"referenceName": "DS009_raw_cases_and_deaths2",
 						"type": "DatasetReference"
 					},
 					"name": "CasesAndDeathsSource"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS010_country_lookup",
+						"type": "DatasetReference"
+					},
+					"name": "CountryLookup"
 				}
 			],
 			"sinks": [],
@@ -25,6 +32,12 @@
 				},
 				{
 					"name": "PivotCounts"
+				},
+				{
+					"name": "LookupCountry"
+				},
+				{
+					"name": "SelectforSink"
 				}
 			],
 			"scriptLines": [
@@ -43,6 +56,16 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     dateFormats: ['yyyy-MM-dd','MM/dd/yyyy','dd/MM/yyyy','yyyy/MM/dd','MM-dd-yyyy','dd-MM-yyyy','dd.MM.yyyy','MM.dd.yyyy','yyyy.MM.dd']) ~> CasesAndDeathsSource",
+				"source(output(",
+				"          country as string,",
+				"          country_code_2_digit as string,",
+				"          country_code_3_digit as string,",
+				"          continent as string,",
+				"          population as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> CountryLookup",
 				"ConvertDatefromStringToDate filter(continent == 'Europe' && not(isNull(country_code))) ~> FilterEuropeOnly",
 				"FilterEuropeOnly select(mapColumn(",
 				"          country,",
@@ -66,7 +89,23 @@
 				"     pivotBy(indicator, ['confirmed cases', 'deaths']),",
 				"     count = sum(daily_count),",
 				"     columnNaming: '$V_$N',",
-				"     lateral: true) ~> PivotCounts"
+				"     lateral: true) ~> PivotCounts",
+				"PivotCounts, CountryLookup lookup(PivotCounts@country == CountryLookup@country,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LookupCountry",
+				"LookupCountry select(mapColumn(",
+				"          country = PivotCounts@country,",
+				"          country_code_2_digit,",
+				"          country_code_3_digit,",
+				"          population = PivotCounts@population,",
+				"          {confirmed cases_count},",
+				"          deaths_count,",
+				"          reported_date,",
+				"          source",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectforSink"
 			]
 		}
 	}
