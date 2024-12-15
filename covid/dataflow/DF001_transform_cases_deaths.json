@@ -10,30 +10,30 @@
 						"type": "DatasetReference"
 					},
 					"name": "CasesAndDeathsSource"
-				},
-				{
-					"name": "source2"
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "FilterEuropeOnly"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          country as string,",
 				"          country_code as string,",
 				"          continent as string,",
-				"          population as string,",
+				"          population as integer,",
 				"          indicator as string,",
-				"          daily_count as string,",
-				"          date as string,",
-				"          rate_14_day as string,",
+				"          daily_count as integer,",
+				"          date as date,",
+				"          rate_14_day as double,",
 				"          source as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> CasesAndDeathsSource",
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source2"
+				"CasesAndDeathsSource filter(continent == 'Europe' && not(isNull(country_code))) ~> FilterEuropeOnly"
 			]
 		}
 	}
