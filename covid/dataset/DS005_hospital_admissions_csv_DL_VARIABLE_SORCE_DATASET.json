@@ -10,6 +10,9 @@
 				"type": "string"
 			}
 		},
+		"folder": {
+			"name": "Data Ingestion (Variables)"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
