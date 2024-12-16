@@ -13,7 +13,7 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/DS0013_dim_date_lookup')]",
+			"name": "[concat(parameters('factoryName'), '/DS012_Hospital_admsission')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -26,8 +26,8 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "dim_date.csv",
-						"folderPath": "lookup",
+						"fileName": "hospital_admissions.csv",
+						"folderPath": "ecdc/hospital_admissions",
 						"fileSystem": "raw"
 					},
 					"columnDelimiter": ",",
@@ -37,7 +37,11 @@
 				},
 				"schema": [
 					{
-						"name": "date_key",
+						"name": "country",
+						"type": "String"
+					},
+					{
+						"name": "indicator",
 						"type": "String"
 					},
 					{
@@ -45,43 +49,19 @@
 						"type": "String"
 					},
 					{
-						"name": "year",
-						"type": "String"
-					},
-					{
-						"name": "month",
-						"type": "String"
-					},
-					{
-						"name": "day",
-						"type": "String"
-					},
-					{
-						"name": "day_name",
-						"type": "String"
-					},
-					{
-						"name": "day_of_year",
-						"type": "String"
-					},
-					{
-						"name": "week_of_month",
-						"type": "String"
-					},
-					{
-						"name": "week_of_year",
-						"type": "String"
-					},
-					{
-						"name": "month_name",
-						"type": "String"
-					},
-					{
-						"name": "year_month",
-						"type": "String"
-					},
-					{
 						"name": "year_week",
+						"type": "String"
+					},
+					{
+						"name": "value",
+						"type": "String"
+					},
+					{
+						"name": "source",
+						"type": "String"
+					},
+					{
+						"name": "url",
 						"type": "String"
 					}
 				]
@@ -1021,13 +1001,12 @@
 						"          indicator,",
 						"          daily_count,",
 						"          source,",
-						"          each(match(name == 'date'),",
-						"               'reported' + '_date' = $$)",
+						"          each(match(name=='date'),",
+						"               'reported'+'_date' = $$)",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> SelectOnlyRequiredFields",
-						"CasesAndDeathsSource derive(date = toDate(date, 'MM/dd/yyyy')\r",
-						") ~> ConvertDatefromStringToDate",
+						"CasesAndDeathsSource derive(date = toDate(date, 'MM/dd/yyyy')) ~> ConvertDatefromStringToDate",
 						"SelectOnlyRequiredFields pivot(groupBy(country,",
 						"          country_code,",
 						"          population,",
@@ -1302,7 +1281,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DS0013_dim_date_lookup')]",
+				"[concat(variables('factoryId'), '/datasets/DS012_Hospital_admsission')]",
 				"[concat(variables('factoryId'), '/datasets/DS014_processed_hospital_admissions_weekly')]",
 				"[concat(variables('factoryId'), '/datasets/DS015_processed_hospital_admissions_daily')]"
 			]
